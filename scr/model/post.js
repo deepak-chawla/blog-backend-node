@@ -15,6 +15,12 @@ const postSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    thumbnail:{
+        type: String
+    },
+    image:{
+        type: String
+    },
     createdBy:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'admin'

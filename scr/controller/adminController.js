@@ -50,21 +50,43 @@ exports.Signin = (req, res)=>{
 exports.createPost = (req, res)=>{
     const {title, text, category} = req.body;
     const createdBy = req.user._id;
+    const thumbnail = req.file.path;
+
     const _newPost = new Post({
         title,
         text,
         category,
-        createdBy
+        createdBy,
+        thumbnail
     });
 
     _newPost.save((err, post)=>{
-        if(err)
-        return res.status(400).json({err});
         if(post)
         return res.status(201).json({post});
     });
 
 }
+
+exports.getPost = (req, res) => {
+  Post.find().exec((error, posts) => {
+    if (error) return res.status(400).json({ error });
+    if (posts) {
+      const POSTS = [];
+      for (let post of posts) {
+        POSTS.push({
+          _id: post._id,
+          title: post.title,
+          text: post.text,
+          thumbnail: post.thumbnail,
+          createdBy: post.createdBy,
+          date: post.date,
+          category: post.category
+        });
+      }
+      return res.status(200).json({POSTS});
+    }
+  });
+};
 
 
 function getCategories(categories, parentId = null) {
