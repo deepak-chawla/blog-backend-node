@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const {Signup, Signin, createPost, createCategory, getCategory, getPost} = require("../controller/adminController");
+const {Signup, Signin, createPost, createCategory, 
+  getCategory, getPosts, getPost, deletePost, updatePost} = require("../controller/adminController");
 const {isValidateSignUp, isValidateSignIn} = require('../validator/validate');
 const { requireSignIn } = require('../middleware/index');
 const multer = require('multer');   
@@ -22,6 +23,8 @@ router.post("/signin", isValidateSignIn, Signin);
 router.post("/createPost", requireSignIn, upload.single('thumbnail'), createPost);
 router.post("/createCategory", requireSignIn, createCategory);
 router.get("/getCategory", getCategory);
-router.get("/getPost", getPost);
-
+router.get("/getPosts", getPosts);
+router.get("/getPost/:id", getPost);
+router.put("/updatePost/:id", updatePost);
+router.delete("/deletePost/:id", deletePost);
 module.exports = router;

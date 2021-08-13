@@ -67,7 +67,7 @@ exports.createPost = (req, res)=>{
 
 }
 
-exports.getPost = (req, res) => {
+exports.getPosts = (req, res) => {
   Post.find().exec((error, posts) => {
     if (error) return res.status(400).json({ error });
     if (posts) {
@@ -87,6 +87,35 @@ exports.getPost = (req, res) => {
     }
   });
 };
+
+exports.getPost = (req, res) => {
+  Post.findById(req.params.id)
+  .exec((err,post)=>{
+    if(err)
+    res.status(400).json({err});
+    if(post)
+    res.status(200).json({post});
+  })
+}
+
+exports.updatePost = async (req, res) => {
+  const updatedPost = await Post.findByIdAndUpdate(req.params.id,{
+    $set: req.body,
+  },{new: true} );
+  res.status(200).json(updatedPost);
+}
+
+exports.deletePost = (req, res) => {
+  Post.findById(req.params.id)
+  .exec((err,post)=>{
+    if(err)
+    res.status(400).json({err});
+    if(post){
+      post.delete();
+      res.status(200).json("your post successfully deleted.");
+    }
+    })
+}
 
 
 function getCategories(categories, parentId = null) {
