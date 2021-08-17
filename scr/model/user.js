@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const adminSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
     firstName:{
         type: String,
         required: true,
@@ -30,9 +30,9 @@ const adminSchema = mongoose.Schema({
 {timestamps: true}
 );
 
-adminSchema.virtual("fullName").get(function (){
+userSchema.virtual("fullName").get(function (){
     return `${this.firstName} ${this.lastName}`;
 });
 
 
-module.exports = mongoose.model('admin',adminSchema);
+module.exports = mongoose.model('User',userSchema);

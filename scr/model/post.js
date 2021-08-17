@@ -23,15 +23,15 @@ const postSchema = new mongoose.Schema({
     },
     createdBy:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'admin'
+        ref: 'User'
     },
     category:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'category'
+        ref: 'Category'
     },
     comments:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'comment'
+        ref: 'Comment'
     }]
 });
 
